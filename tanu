@@ -1,0 +1,112 @@
+- <!DOCTYPE html>
+<html lang="en" ng-app="spiderG" > 
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>SpiderG</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="bower_components/MDBootstrap/css/mdb.min.css" rel="stylesheet">
+  <link href="bower_components/components-font-awesome/css/font-awesome.css" rel="stylesheet">
+  <link href="bower_components/animate.css/animate.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="app.css">
+</head>
+<body class="grey lighten-5">
+<div ng-if="location.path() !== '/login'" ng-cloak>
+    <nav class="navbar navbar-expand-md navbar-dark  mb-2 py-0 z-depth-1 default-color">
+      <a class="navbar-brand py-0 my-0" href="#!/chatHistory/1">
+            <img src="images/logo.png" height="60" alt="">
+      </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample04" aria-controls="navbarsExample04" aria-expanded="false" 
+        aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+        <!--chatbar Toggle-->  
+      <div class="collapse navbar-collapse" id="navbarsExample04">
+        <ul class="navbar-nav chatToggle">
+           <li class="nav-item  ml-0 justify-content-center"  >
+            <a  class="nav-link active"  onclick="toggleChat()" style="color:white"><i class="fa fa-bars fa-2x"></i></a>
+          </li>
+        </ul>
+        <form class="form-inline my-0 w-100 d-flex flex-row-reverse">
+         <i class="text-white fa fa-search " aria-hidden="true"></i> <input class="form-control search" type="text" placeholder="Search">
+        </form>
+          
+        <!--notification Toggle-->  
+        <ul class="navbar-nav mr-5">
+            <li class="nav-item ml-5">
+              <a  class="nav-link active"   onclick="toggleNotification()" style="color:white"><i class="fa fa-bell fa-2x"></i></a>
+            </li>
+        </ul>
+
+        <!--    menu-->
+
+      <!--  <div class="btn-group mr-5 pr-5 ml-5">
+           <a class="text-white" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-th-large fa-2x" aria-hidden="true"></i></a>
+            <div class="dropdown-menu dropdown">
+                <a class="dropdown-item" href="#!/profile">My Profile</a>
+                <a class="dropdown-item" href="#!/addExpense">Add Expense</a>
+                <a class="dropdown-item" href="#!addTask">Add Task</a>
+            </div>
+        </div>-->
+
+           <ul class="navbar-nav ml-auto nav-flex-icons  mr-5 pr-5 pl-5 pt-2">
+            <li class="nav-item avatar dropdown">
+             <a class="text-white" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-th-large fa-2x" aria-hidden="true"></i></a>
+                <div class="dropdown-menu dropdown-menu-right py-0 z-depth-1" aria-labelledby="navbarDropdownMenuLink-5">
+                    <a class="dropdown-item" href="#!/profile">My Profile</a>
+                <a class="dropdown-item" href="#!/addExpense">Add Expense</a>
+                <a class="dropdown-item" href="#!addTask">Add Task</a>
+                </div>
+            </li>
+         </ul>
+          
+        <!--profile-->  
+         <ul class="navbar-nav ml-auto nav-flex-icons">
+            <li class="nav-item avatar dropdown">
+                <a class="nav-link " id="navbarDropdownMenuLink-5" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width:60px">
+                    <img src="images/users/m4.png" class="img-fluid rounded-circle z-depth-0"></a>
+                <div class="dropdown-menu dropdown-menu-right py-0 z-depth-1" aria-labelledby="navbarDropdownMenuLink-5">
+                    <a class="dropdown-item" href="#!/profile">My Profile</a>
+                    <a class="dropdown-item" href="#!/login">LogOut</a>
+                </div>
+            </li>
+         </ul>
+      </div>
+    </nav>
+   
+    <!-- left SideBAr -->
+    <div id="chatSideBar" >
+      <chat-sidebar></chat-sidebar>
+    </div>
+    <!-- Right SideBAr -->
+    <div id="notificationSideBar"   >
+      <notification-sidebar expenses='expenses'></notification-sidebar>
+    </div>
+    
+</div>
+    
+    <div class="view-animate-container">
+        <div ng-view class="view-animate pt-0"></div>
+    </div>
+
+
+
+
+ <script src="bower_components/jquery/dist/jquery.min.js"></script>
+ <script src="bower_components/popper.js/dist/umd/popper.min.js"></script>
+ <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+ <script src="bower_components/MDBootstrap/js/mdb.min.js"></script>
+ <script src="bower_components/angular/angular.js"></script>
+ <script src="bower_components/angular-route/angular-route.js"></script>
+ <script src="bower_components/angular-cookies/angular-cookies.min.js"></script>
+ <script src="bower_components/angular-animate/angular-animate.min.js"></script>
+ <script src="app.js"></script>
+ <script src="views/login/authentication.js"></script>
+<script src="views/login/login.js"></script>
+    <script src="views/profile/profile.js"></script>
+ <script src="views/chat/chatHistory.js"></script>
+ <script src="views/sidebar/chatSideBar.js"></script>
+ <script src="views/sidebar/notificationSideBar.js"></script>
+</body>
+</html>
