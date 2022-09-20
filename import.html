@@ -1,0 +1,203 @@
+ question 1
+
+ Express was created to make APIs and web applications with ease,
+It saves a lot of coding time almost by half and still makes web and.
+mobile applications are efficient.
+Another reason for using express is that it is written in javascript as javascript is an easy language even if you don't have a previous.
+
+
+
+
+// question 2
+
+var express = require('express');  
+
+var app = express();  
+
+app.get('/', function (req, res) {  
+
+   res.send('Welcome to JavaTpoint');  
+
+})  
+
+var server = app.listen(8000, function () {  
+
+var host = server.address().address  
+
+  var port = server.address().port  
+
+ console.log("Example app listening at http://%s:%s", host, port)  
+
+})
+
+
+
+
+
+ // question 3
+
+
+
+Middleware is software which lies between an operating system and the applications running on it. Essentially functioning as hidden translation layer, middleware enables communication and data management for distributed applications. It is sometimes called plumbing, as it connects two applications together so data and databases can be easily passed between the “pipe.” Using middleware allows users to perform such requests as submitting forms on a web browser or allowing the web server to return dynamic web pages based on a user’s profile.
+
+
+
+ // question 4
+
+
+
+ const http = required('http');
+
+ const express= required('express');
+
+ const app = express();
+
+ app.use((req , res, next )=>{
+
+ console.log(' In the middleware');
+
+next();
+
+});
+
+ app.use((req , res, next)=>{
+
+ console.log(' in another middleware');
+
+});
+
+
+
+ const server= http.createServer(app);
+
+server.listen(3000);
+
+
+
+
+
+ // question 5
+
+const http = required('http');
+
+const express= required('express');
+
+const app = express();
+
+app.use((req , res, next )=>{
+
+console.log(' In the middleware');
+
+next();
+
+});
+
+app.use((req , res, next)=>{
+
+console.log(' in another middleware');
+
+ res.send(' <h1>Hello from Express!</h1>');
+
+});
+
+
+
+const server= http.createServer(app);
+
+server.listen(3000);
+
+
+
+
+
+ // question 6
+
+
+
+const http = required('http');
+
+const express= required('express');
+
+const app = express();
+
+app.use((req , res, next )=>{
+
+console.log(' In the middleware');
+
+next();
+
+});
+
+app.use((req , res, next)=>{
+
+console.log(' in another middleware');
+
+ res.send(' <h1>hello to node js!</h1>');
+
+});
+
+
+
+const server= http.createServer(app);
+
+server.listen(3000);
+
+
+
+
+
+ // question 7
+
+
+
+var express = require('express');
+
+var app = express();
+
+var PORT = 3000;
+
+
+
+// Without middleware
+
+app.get('/', function(req, res){
+
+	res.type('.png').send();
+
+
+
+	// image/png
+
+	console.log(res.get('Content-type'));
+
+});
+
+
+
+app.listen(PORT, function(err){
+
+	if (err) console.log(err);
+
+	console.log("Server listening on PORT", PORT);
+
+});
+
+
+
+ // question 8
+
+var router = express.Router();
+
+var PORT = 3000;
+
+
+
+// App listening on the below port
+
+app.listen(PORT, function(err){
+
+   if (err) console.log(err);
+
+   console.log("Server listening on PORT", PORT);
+
+});
