@@ -1,0 +1,466 @@
+//app.js
+
+
+
+var express = require("express"),
+
+mongoose = require("mongoose"),
+
+passport = require("passport"),
+
+bodyParser = require("body-parser"),
+
+LocalStrategy = require("passport-local"),
+
+passportLocalMongoose =
+
+require("passport-local-mongoose"),
+
+User = require("./models/user");
+
+
+
+mongoose.set('useNewUrlParser', true);
+
+mongoose.set('useFindAndModify', false);
+
+mongoose.set('useCreateIndex', true);
+
+mongoose.set('useUnifiedTopology', true);
+
+mongoose.connect("mongodb://localhost/auth_demo_app");
+
+
+
+var app = express();
+
+app.set("view engine", "ejs");
+
+app.use(bodyParser.urlencoded({ extended: true }));
+
+
+
+app.use(require("express-session")({
+
+secret: "Rusty is a dog",
+
+resave: false,
+
+saveUninitialized: false
+
+}));
+
+
+
+app.use(passport.initialize());
+
+app.use(passport.session());
+
+
+
+passport.use(new LocalStrategy(User.authenticate()));
+
+passport.serializeUser(User.serializeUser());
+
+passport.deserializeUser(User.deserializeUser());
+
+
+
+//=====================
+
+// ROUTES
+
+//=====================
+
+
+
+// Showing home page
+
+app.get("/", function (req, res) {
+
+res.render("home");
+
+});
+
+
+
+// Showing secret page
+
+app.get("/secret", isLoggedIn, function (req, res) {
+
+res.render("secret");
+
+});
+
+
+
+// Showing register form
+
+app.get("/register", function (req, res) {
+
+res.render("register");
+
+});
+
+
+
+// Handling user signup
+
+app.post("/register", function (req, res) {
+
+var username = req.body.username
+
+var password = req.body.password
+
+User.register(new User({ username: username }),
+
+password, function (err, user) {
+
+if (err) {
+
+console.log(err);
+
+return res.render("register");
+
+}
+
+
+
+passport.authenticate("local")(
+
+req, res, function () {
+
+res.render("secret");
+
+});
+
+});
+
+});
+
+
+
+//Showing login form
+
+app.get("/login", function (req, res) {
+
+res.render("login");
+
+});
+
+
+
+//Handling user login
+
+app.post("/login", passport.authenticate("local", {
+
+successRedirect: "/secret",
+
+failureRedirect: "/login"
+
+}), function (req, res) {
+
+});
+
+
+
+//Handling user logout
+
+app.get("/logout", function (req, res) {
+
+req.logout();
+
+res.redirect("/");
+
+});
+
+
+
+function isLoggedIn(req, res, next) {
+
+if (req.isAuthenticated()) return next();
+
+res.redirect("/login");
+
+}
+
+
+
+var port = process.env.PORT || 3000;
+
+app.listen(port, function () {
+
+console.log("Server Has Started!");
+
+});
+
+
+
+
+
+.index.html
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+	<title> Signup Form</title>
+
+		
+
+		
+
+<link rel="stylesheet"
+
+href=
+
+"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+
+integrity=
+
+"sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+
+crossorigin="anonymous">	
+
+		
+
+<link rel="stylesheet" type="text/css" href="style.css">
+
+		
+
+</head>
+
+<body>
+
+	
+
+	<br>
+
+	<br>
+
+	<br>
+
+	<div class="container" >
+
+		<div class="row">
+
+		<div class="col-md-3">
+
+					
+
+		</div>
+
+				
+
+		<div class="col-md-6 main">
+
+					
+
+			<form action="/sign_up" method="post">
+
+					
+
+			<h1> Signup form </h1>
+
+							
+
+			<input class="box" type="text" name="name" id="name"
+
+			placeholder="Name" required /><br>
+
+							
+
+			<input class="box" type="email" name="email" id="email"
+
+			placeholder="E-Mail " required /><br>
+
+							
+
+			<input class="box" type="password" name="password"
+
+			id="password" placeholder="Password " required/><br>
+
+							
+
+			<input class="box" type="text" name="phone" id="phone"
+
+			placeholder="Phone Number " required/><br>
+
+						<br>
+
+			<input type="submit" id="submitDetails"
+
+			name="submitDetails" value="Submit" /><br>
+
+					
+
+			</form>
+
+					
+
+		</div>
+
+				
+
+				
+
+		<div class="col-md-3">
+
+		</div>
+
+				
+
+	</div>
+
+	</div>
+
+</body>
+
+</html>	
+
+//   login 
+
+
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+	<title> Signup Form</title>
+
+<link rel="stylesheet"
+
+href=
+
+"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+
+integrity=
+
+"sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+
+crossorigin="anonymous">
+
+		
+
+<link rel="stylesheet" type="text/css" href="style.css">
+
+</head>
+
+	<body>
+
+	<br>
+
+	<br>
+
+	<br>
+
+	<div class="container" >
+
+		<div class="row">
+
+		<div class="col-md-3">
+
+		</div>
+
+				
+
+		<div class="col-md-6 main">
+
+					
+
+			<h1> Signup Successful</h1>
+
+					
+
+		</div>
+
+				
+
+				
+
+		<div class="col-md-3">
+
+		</div>
+
+				
+
+		</div>
+
+	</div>
+
+</body>
+
+</html>
+
+
+
+
+
+// style.css
+
+.main{
+
+	padding:20px;
+
+	font-family: 'Helvetica', serif;
+
+	box-shadow: 5px 5px 7px 5px #888888;
+
+	
+
+}
+
+.main h1{
+
+	font-size: 40px;
+
+	text-align:center;
+
+	font-family: 'Helvetica', serif;
+
+	
+
+}
+
+input{
+
+	font-family: 'Helvetica', serif;
+
+	width: 100%;
+
+	font-size: 20px;
+
+	padding: 12px 20px;
+
+	margin: 8px 0;
+
+	border: none;
+
+	border-bottom: 2px solid #767474;
+
+}
+
+input[type=submit] {
+
+	font-family: 'Helvetica', serif;
+
+	width: 100%;
+
+	background-color: #767474;
+
+	border: none;
+
+	color: white;
+
+	padding: 16px 32px;
+
+	margin: 4px 2px;
+
+	border-radius: 10px;
+
+}
+
